@@ -1,15 +1,11 @@
-# Rust Workshop
+# Rust Workshop - lesson 1
 
-Hey folks, welcome to this adventure on planet git. I am Devdutt Shenoi, let me be your guide today. We are heading to the shores of a land of crustaceans, it's called rust-lan(d)g :D
+Welcome back, we have landed on rust-land, now it is time to meet the rustaceans! First we shall learn a bit about how rust-lang came to be. Rust is a compiled language, which means that we need to put the code through a compiler before we can get it to do stuff, making it different from languages like python and javascript which run directly, with the help of interpreters. There is a lot more to understand here, but let's keep that aside and consider it homework, in short, a compiler helps to make your programs fast as they can have logic built in to consider the entire program instead of just the lines that are being read by it as it goes through the code. Also, compiled programs could be running at the level of the hardware the whole time and not have as much overhead as that which is required by interpreted ones. 
 
-Awesome, nnow that I have introduced myself and what we are going to be up to, let me answer a question that you might be itching to ask, why? Why even land on an unknown and scary looking place full of the unknown? I have a simple answer for you, because it is going to be fun!
+## Why should I care about rust being a compiler language?
+As I stated above, rust is more like C/C++ than python or JS which makes it slightly faster in most computing tasks, but at the same time, unlike C/C++, rust has features that help you write programs that are most of the times much easier to debug and figure out where you went wrong. This and the fact that rust programs are simpler to manage and add external dependencies to makes it world apart from something like C/C++. Hope that's clear, now lets learn a bit more about compiling your code in rust.
 
-Also, rust is filled with tons of great learnings for any programmer, be it the novice ones right out of school/going through a career change, or the veterans trying to learn something for fun!
+In rust's case, the compiler is conveniently called rustc. As a rust programmer though, you will be using a tool that controls and commands rustc and various other programs on the computer to take your code, compile it, run it, even document it and if need be, publish it to the web so that others can get to use it to build their own programs. The last feature is also known as packaging(a feauture I wrote about in the why section), and tool you'll be using is called cargo. for the sake of simplicity, and in order to not extend this workshop beyond the time-limit set for us, I will just share that you can get it from https://rustup.rs.
 
-So, again, why are we learning about rust-lang?
-1. Because it is a fun and really challenging language that teaches you a lot about programming computers.
-2. As a langauge it doesn't think of it's users as naive or experts, from my experience it considers you a human, with the ability to write both masterpieces and `<insert profanity>` ;)
-3. It has a great community of folks that swear by it and use it to write awesome software, so lets go!
-
-### I am ready, what next?
-Head over to the `lesson-1` branch to start with the workshop.
+### What am I supposed to do again?
+Head over to your computer and start by setting up rust with the help of https://rustup.rs. Once you are done, checkout the `lesson-2` branch.
