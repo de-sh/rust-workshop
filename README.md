@@ -1,11 +1,33 @@
-# Rust Workshop - lesson 1
+# Rust Workshop - lesson 2
 
-Welcome back, we have landed on rust-land, now it is time to meet the rustaceans! First we shall learn a bit about how rust-lang came to be. Rust is a compiled language, which means that we need to put the code through a compiler before we can get it to do stuff, making it different from languages like python and javascript which run directly, with the help of interpreters. There is a lot more to understand here, but let's keep that aside and consider it homework, in short, a compiler helps to make your programs fast as they can have logic built in to consider the entire program instead of just the lines that are being read by it as it goes through the code. Also, compiled programs could be running at the level of the hardware the whole time and not have as much overhead as that which is required by interpreted ones. 
+So, we have learnt about and you have most probably setup the rust-lang developer environment on your machine, with rustup. If not, you can still follow along for most of this lesson by logging onto https://play.rust-lang.org, to try out what we are about to learn. Lets get started.
 
-## Why should I care about rust being a compiler language?
-As I stated above, rust is more like C/C++ than python or JS which makes it slightly faster in most computing tasks, but at the same time, unlike C/C++, rust has features that help you write programs that are most of the times much easier to debug and figure out where you went wrong. This and the fact that rust programs are simpler to manage and add external dependencies to makes it world apart from something like C/C++. Hope that's clear, now lets learn a bit more about compiling your code in rust.
+As a rust programmer, the first program that you need to know about, much like the rest of them is one to print "Hello, World!". This is what it might look like:
+```rust
+fn main() {
+  println!("Hello, World!");
+}
+```
+Here, we are introduced to two important concepts in rust, functions and macros. Functions take in input and produce an output and in this example, `main()` is a function that takes 0 inputs and gives 0 outputs. Well, not exactly, but lets think of it that way. Macros on the other hand are different in that they are just replaced by more code when expanded, i.e. `println!(..)` expands to code that actually formats the string, sends it as input to the underlying system libraries that then interact with the hardware to print to screen, makes sense?
 
-In rust's case, the compiler is conveniently called rustc. As a rust programmer though, you will be using a tool that controls and commands rustc and various other programs on the computer to take your code, compile it, run it, even document it and if need be, publish it to the web so that others can get to use it to build their own programs. The last feature is also known as packaging(a feauture I wrote about in the why section), and tool you'll be using is called cargo. for the sake of simplicity, and in order to not extend this workshop beyond the time-limit set for us, I will just share that you can get it from https://rustup.rs.
+### Why should I learn about functions and macros?
+There are a lot of treats that you can pack into your programs by making use of functions and macros when necessary. The second most important aspect of writng code, after making it executable ofcourse(duh), is to make it readable, not just for others, but for yourself. Code readability will greatly improve your productivity when you get back to your code in the future, believe me. Functions help you make your code readable as they greatly reduce repetitive code, you can just shove code that does something into a function and call it multiple times, let's see an example:
+```rust
+fn main() {
+  println!("1 + 2 = 3");          // We know about printing stuff already
+  println!("1 + 2 = {}", 1 + 2);  // With the ability to format code, we can actually let rust do the calculation for us and place the result in the output
+  print_add(1, 2);                // This is a function call, we just pass values to a function that does everything from here on...
+  print_add(3, 3);
+  print_add(1, 10);
+}
 
-### What am I supposed to do again?
-Head over to your computer and start by setting up rust with the help of https://rustup.rs. Once you are done, checkout the `lesson-2` branch.
+fn print_add(a: i32, b:i32) {     // We define a function that takes in two i32 values and prints them along with their sum to screen using println!()
+  println!("{} + {} = {}", a, b, a + b);
+}
+```
+We will learn more about functions later, but it's enough to know that they take inputs and give outputs and in-between perform some computations that is defined inside them, they are most effectively used when you have to make these calls multiple times.
+
+Macros on the other hand are parts of your code that get filled-in when you compile. They are a slightly more complex topic and for that reason, we won't delve into them much, but do keep in mind that they only have an impact on your compilation, while functions actually are separate computing blocks that have some impact on the execution of your code.
+
+### Aight, where do I go next?
+Write your own functions and use macros like `println!()`, `format!()`, etc. Once you are done, checkout the `lesson-3` branch.
