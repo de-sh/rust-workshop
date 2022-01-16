@@ -1,52 +1,132 @@
-# Rust Workshop - lesson 3
+# Rust Workshop - lesson 4
 
-After having seen how we defined the function in the last lesson, you might have a few questions like, what's with the `:i32`? Well, since rust is compiled, it needs to know what kind of data functions will take in and give out, so we use "Type Annotations" to let the compiler know. We will now learn about variables, which are basically locations in memory that your program can access to read or write values to, which as we will demonstrate can be defined and initiated as follows:
-```rust
-let a = 1;                      // The variable is set with a generic type called {integer} and will be cast into a type based on later usage
-let mut b = 1i32;               // We have annotated the type to the actual value when initiated, and also made it mutable, rust variables are by default immutable
-b = 2;                          // Since b was defined as mutable, one can change it's value till the binding exists, given the new values are also of the same type(i32)
-let c: i32 = 1;                 // The variable is defined with a type annotation and defined on the same line
-let d: String = "Hello".into(); // Types can have methods like .into() and T::from() that allows the programmer to perform type conversion
-```
-Note, as you can see we use the let keyword to perform variable definition.
+So far we have learnt about the rust compiler, writing code that is readable using functions and macros and about some of the types in rust-lang. Though we have only begun, now seems like the right time to introduce you to the concept of control-flow, especially what we have in rust-lang.
 
-Similar to how variables are annotated, functions can be annotated as follows:
-```rust
-fn hello(name: &str) -> String {  // A function that takes in a raw string reference and returns a String type
-  "Hello, ".to_string() + name + "!"
-}
+If you are familiar with any other programming language, you are sure to have used a few of them, but let's see them in code and figure out how we can use it to make our program actually do stuff.
 
-fn add(a: i32, b: i32) -> i32 {
-  a + b
-}
+## Why should you learn about control flow?
+Because it is the heart of almost every programming language. What is the use of a program that you can't use to do stuff? The actual doing of stuff requires the computer to keep moving forward, perform something, something else and so on. This includes doing something if the conditions are right, repeating a set of actions while a particular set of conditions are met, perform something for all objects in a group and so on... 
 
-fn float_to_in
-```
-
-### Why are we learning about types again?
-Rust as a language tries to make sure that the programmer has specified everything necessary to make sure that the program doesn't screw-up. As a part of this caution, it runs a tool called the type checker on your code, making sure that all variables have the right type and are being used properly. Expanding on this is the concept of borrow checking, which is what makes rust a whole lot better for writing memory safe code. Why? Because it ensures that variables in code are allocated memory and when the times comes, also deallocated properly. Thus we end up having no part of the code refering to any location in memory that is not actually holding values that the code supposedly thinks it should. All this without having to do stuff such as garbage collection(a concept you'll be familiar with if you have used python/java/golang).
-
-To explain the above with an analogy, take the example of a neighbourhood that has many homes, each home being able to house a single person, with each house getting an address and you are the phone operator who's supposed to route calls coming in for the folks living in the neighbourhood. The calls are supposed to reach the end-person, no matter if the person changes homes, has a second address for their office, or in the case that such a house doesn't actually exist, in which case the call shouldn't be allowed in the first place. This is exactly what the concepts of ownership, borrowing and lifetimes manages to achieve for your code, i.e. making sure that at no part your code is trying to call(access) a house(variable) that doesn't actually exist anymore. To write the above as code, consider the following:
-
+We will start out with conditional statements. In rust, it's as simple as using the key words `if` and `else`. Say you have a number a, you must only print it's value if it is either 1 or -1, the code might look something like this:
 ```rust
 fn main() {
-  let a = 1;
-  let b = a;
-  println!("{} : {}", a, b);
+  let a = _;      // set the value as you wish
+  if a == 1 || a == -1 {
+    println!("{}", a);
+  }
 }
 ```
-The above should compile and run properly, because types such as i32 are small and easy to copy, but when you consider larger/bulkier objects like string which are tough to keep copying, this isn't the response.
-
+You might know of most of these as the regular old equality and logical operators. To the above program, we can add another block that adds 2 to a and then print the result if it is neither 1 nor -1:
 ```rust
 fn main() {
-  let a = "Hello".to_string();
-  let b = a;
-  println!("{} : {}", a, b);
+  let a = _;      // set the value as you wish
+  if a == 1 || a == -1 {
+    println!("{}", a);
+  } else {
+    println!("{}", a + 2);
+  }
 }
 ```
-As you might have noticed, the compiler won't let you compile the code because: "move occurs because `a` has type `String`, which does not implement the `Copy` trait". To solve this, we could actually use the `clone()` method, which would create a whole new location in memory and perform what's known as a deep copy.
+You can achieve the same with lesser code by converting this into a single line of code like:
+```rust
+fn main() {
+  let a = _;      // set the value as you wish
+  println!("{}", if a == 1 || a == -1 { a } else { a + 2 });
+}
+```
+This actually decreases your code's readability, hence writing code like this is not a recommended practice.
 
-Why is all of this important to know? If you know the concept behind why copying is compute intensive, you can write more performant code, easy. Hope we are on the same page, let us continue.
+You can add more complex conditions such as "if neither 1 nor -1 but odd, subtract 3 and print value", which would look something like:
+```rust
+fn main() {
+  let a = _;      // set the value as you wish
+  if a == 1 || a == -1 {
+    println!("{}", a);
+  } else if a % 2 == 1 {
+    println!("{}", a - 3);
+  } else {
+    println!("{}", a + 2);
+  }
+}
+```
 
-### What shall I do now?
-Try practicing your newly learned skill, dealing with types, to write code that takes two numbers as input from the user through the command line and outputs to screen their sum. Once you are done with that, head over to the `lesson-4` branch.
+Rust also allows you to write repetitive code, like if you want to print to screen while a number is positive and being decremented in value:
+```rust
+fn main() {
+  let mut a = 100i32;
+  while a.is_positive() {
+    println!("{}", a);
+    a -= 1;
+  }
+}
+```
+If you are coming from a language like C/C++, java, you might be slightly sadened by the lack of the `++`/`--` keywords, but don't fret, it's for the better :D
+
+The above program seems to have been written by someone who wasn't very considerate of the fact that all positive numbers starting from 100 down are in a range, this is where rust's range operators come in handy. Here's an example of what I mean:
+```rust
+let r = 0..100; // Numbers 0, 1, 2... 99 (not inclusive of 100)
+let s = 0..=100; // Numbers 0, 1, 2... 100(inclusive of 100)
+```
+Ranges are iterable, i.e. you can go from one to the other, this is achieved by using the concept of iterators. You can use iterators to perform repetitive tasks with the help of `for` keyword. Reimplementing the earlier example we get:
+```rust
+fn main() {
+  for a in (1..=100).rev() {
+    println!("{}", a);
+  }
+}
+```
+Much simpler and easier to read, no? Now let's learn about the loop keyword. Repetition needs a simple loop, but only if you have a stopping condition should you use `while`/`for`, if you want a forever loop, which is possible with `while true`, you should use the `loop` keyword instead. This you can use to keep getting user input like:
+```rust
+loop {
+  let input = _;          // Get user input here, you might have to use something like stdin, we will cover this later
+  println!("{}", input);  // Print it to screen
+}
+```
+
+As we were mentioning above with conditionals, there's a better way to handle more complex ones. Say you have to perform a  calculation depending on the arithment operator the user inputs along with the two numbers, you can achieve that with the help of the match key word, as follows:
+```rust
+fn calculate(op: char, a: i32, b: i32) {
+  match op {
+    '+' => println!("{} + {} = {}", a, b, a + b),
+    '-' => println!("{} - {} = {}", a, b, a - b),
+    '*' => println!("{} * {} = {}", a, b, a * b),
+    '/' => println!("{} / {} = {}", a, b, a / b),
+    na => println!("Not an arithmetic operator: '{}'", na),
+  }
+}
+```
+
+You can write match statements that are more complex, similar to the `if`-`else if`-`else` ladder we wrote earlier, but with an added condition that multiplies any number between 2 and 10 with 5, no matter odd or even:
+```rust
+let a = _;
+match a {
+  2..10 => println!("{}", x * 5);
+  1 | -1 => println!("{}", x),
+  x if x % 2 == 1 => println!("{}", x - 3),
+  x => println!("{}", x + 2),
+}
+```
+
+We had earlier learnt about functions, these can also be incorporated as part of the program's control-flow. Recursion is basically iteration, but using funtions, let's see how this is achieved in rust by reimplementing an earlier example:
+```rust
+fn iterate(a: i32) {
+  if a > 0 {
+    println!("{}", a);
+    iterate(a-1);
+  }
+}
+
+fn main() {
+  iterate(100);
+}
+```
+
+## But why are we learning this?
+As mentioned earlier, control flow is an important part of programming. We can use it to build something like a game...
+
+### Games? I am all ears, how do I build a game?
+Not exactly a game, we will be writing a simple rust project to take inputs from the CLI and perform actions on as set of state variables and display the consequences of the users various actions, kind of like a game. This is the first challenge of the workshop, go and write a loop that takes user inputs and updates a value which was initially set to 0 and then after each update, display it on screen. (HINT: use `loop`, `match`, `stdin` and most importantly a bit of research and reading the documentation ;)
+
+Once you are done, checkout to the `lesson-5` branch.
+
+P.S: If you are stuck on the challenge, checkout to the `lesson-4-solved` branch
